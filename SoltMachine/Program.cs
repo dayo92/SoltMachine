@@ -8,6 +8,9 @@ namespace SoltMachine
         {
             
             Console.WriteLine("Slot Machine Game");
+
+            const int NUMBER_OF_ROWS = 3;
+            const int NUMBER_OF_COLUMNS = 3;
             
             Random random = new Random();
 
@@ -28,7 +31,7 @@ namespace SoltMachine
 
                 availableBalance -= bet;
             
-                int[,] numbers = new int[3, 3];
+                int[,] numbers = new int[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
                 
                 
                 for (int i = 0; i < numbers.GetLength(0); i++)
