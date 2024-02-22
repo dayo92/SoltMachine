@@ -8,6 +8,8 @@ namespace SoltMachine
         {
             
             Console.WriteLine("Slot Machine Game");
+            
+            Random random = new Random();
 
             int availableBalance = 10;
 
@@ -28,7 +30,6 @@ namespace SoltMachine
             
                 int[,] numbers = new int[3, 3];
                 
-                Random random = new Random();
                 
                 for (int i = 0; i < numbers.GetLength(0); i++)
                 {
