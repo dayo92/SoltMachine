@@ -13,10 +13,11 @@ namespace SoltMachine
             const int NUMBER_OF_ROWS = 3;
             const int NUMBER_OF_COLUMNS = 3;
             const int WINNINGS = 1;
+            const int PLAYER_BALANCE = 100;
             
             Random random = new Random();
 
-            int availableBalance = 10000;
+            int availableBalance = PLAYER_BALANCE;
 
             bool gameIsOn = true;
             bool matchFound = false;
