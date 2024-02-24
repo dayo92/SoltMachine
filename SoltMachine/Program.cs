@@ -74,7 +74,7 @@ namespace SoltMachine
                     if (availableBalance == 0)
                     {
                         Console.WriteLine("No funds left you lose.");
-                        gameIsOn = false;
+                        break;
                     }
 
 
