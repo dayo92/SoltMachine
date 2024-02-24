@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace SoltMachine
 {
@@ -26,9 +27,16 @@ namespace SoltMachine
                 Console.WriteLine($"Your available balance is £{availableBalance}.");
                 
                 Console.Write("How much would you like to bet? ");
-                int bet = Convert.ToInt32(Console.ReadLine());
+                string bet = Console.ReadLine();
                 
-                if (bet > availableBalance)
+                if (!Regex.IsMatch(bet, @"^\d+$"))
+                {
+                    Console.WriteLine("Please enter a valid number.");
+                    continue;
+                }
+                int playerBet = int.Parse(bet);
+                
+                if (playerBet > availableBalance)
                 {
                     Console.WriteLine("Not enough cash ");
                    
@@ -36,9 +44,9 @@ namespace SoltMachine
                 else
                 {
 
-                    Console.WriteLine($"£{bet} bet locked in.");
+                    Console.WriteLine($"£{playerBet} bet locked in.");
 
-                    availableBalance -= bet;
+                    availableBalance -= playerBet;
 
                     int[,] numbers = new int[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
 
@@ -111,7 +119,7 @@ namespace SoltMachine
                     
                     if (matchFound)
                     {
-                        availableBalance +=  bet;
+                        availableBalance +=  playerBet;
                     }
                     
                     Console.WriteLine($"Your remaining balance is £{availableBalance}");
