@@ -26,8 +26,8 @@ namespace SoltMachine
             while (gameIsOn)
             {
                 Console.WriteLine($"Your available balance is £{availableBalance}.");
-                
                 Console.Write("How much would you like to bet? ");
+                
                 string bet = Console.ReadLine();
                 
                 if (!Regex.IsMatch(bet, @"^\d+$"))
@@ -35,11 +35,12 @@ namespace SoltMachine
                     Console.WriteLine("Please enter a valid number.");
                     continue;
                 }
+                
                 int playerBet = int.Parse(bet);
                 
                 if (playerBet > availableBalance)
                 {
-                    Console.WriteLine("Not enough cash ");
+                    Console.WriteLine("Not enough cash. Please try again,");
                    
                 }
                 else
@@ -71,59 +72,104 @@ namespace SoltMachine
 
                         Console.WriteLine();
                     }
+                    
 
-                    if (availableBalance == 0)
-                    {
-                        Console.WriteLine("No funds left you lose.");
-                        break;
-                    }
-
-
+                    //Row
                     for (int i = 0; i < NUMBER_OF_ROWS; i++)
                     {
-                       
-                        if (numbers[i, 0] == numbers[i, 1] && numbers[i, 1] == numbers[i, 2])
+                        bool rowMatch = true;
+
+                        for (int j = 1; j < NUMBER_OF_COLUMNS; j++)
+                        {
+                            if (numbers[i, j] != numbers[i, 0])
+                            {
+                                rowMatch = false;
+                                break;
+                            }
+                        }
+                        
+                        if (rowMatch)
                         {
                             availableBalance += WINNINGS;
-                            Console.WriteLine($"Matching numbers found you won £1.");
+                            Console.WriteLine($"Row match you won £{WINNINGS}.");
                             matchFound = true;
                         }
-
                     }
-
-                    // vertical
+                    
+                    //Column
                     for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
                     {
-                        if (numbers[0, j] == numbers[1, j] && numbers[1, j] == numbers[2, j])
+                        bool columnMatch = true;
+
+                        for (int i = 1; i < NUMBER_OF_ROWS; i++)
                         {
-                            availableBalance += WINNINGS;
-                            Console.WriteLine($"Matching numbers found you won £1.");
-                            matchFound = true;
+                            if (numbers[i, j] != numbers[0, j])
+                            {
+                                columnMatch = false;
+                                break;
+                            }
                         }
 
+                        if (columnMatch)
+                        {
+                            availableBalance += WINNINGS;
+                            Console.WriteLine($"Column match you won £{WINNINGS}.");
+                            matchFound = true;
+                        }
+                    }
+                    
+                    
+                    //Diagonal 
+                    bool diagonalMatch1 = true;
+                    for (int i = 1; i < NUMBER_OF_ROWS; i++)
+                    {
+                        if (numbers[i, i] != numbers[0, 0])
+                        {
+                            diagonalMatch1 = false;
+                            break;
+                        }
                     }
 
-                    // diagonal
-                    if (numbers[0, 0] == numbers[1, 1] && numbers[1, 1] == numbers[2, 2])
+                    if (diagonalMatch1)
                     {
-                        Console.WriteLine($"Matching numbers found you won £1.");
                         availableBalance += WINNINGS;
+                        Console.WriteLine($"Diagonal Match1 you won £{WINNINGS}.");
                         matchFound = true;
                     }
 
-                    if (numbers[0, 2] == numbers[1, 1] && numbers[1, 1] == numbers[2, 0])
+
+                    bool diagonalMatch2 = true;
+                    for (int i = 1; i < NUMBER_OF_ROWS; i++)
                     {
-                        Console.WriteLine($"Matching numbers found you won £1.");
+                        if (numbers[i, NUMBER_OF_ROWS - 1 - i] != numbers[0, NUMBER_OF_ROWS - 1])
+                        {
+                            diagonalMatch2 = false;
+                            break;
+                        }
+                    }
+
+                    if (diagonalMatch2)
+                    {
                         availableBalance += WINNINGS;
+                        Console.WriteLine($"Diagonal Match you won £{WINNINGS}.");
                         matchFound = true;
                     }
+
                     
                     if (matchFound)
                     {
                         availableBalance +=  playerBet;
+                        matchFound = false;
                     }
-                    
+                    if (availableBalance == 0 )
+                    {
+                        Console.WriteLine("No funds left you lose.");
+                        break;
+                    }
+                  
                     Console.WriteLine($"Your remaining balance is £{availableBalance}");
+                    
+                    
 
                 }
             }
