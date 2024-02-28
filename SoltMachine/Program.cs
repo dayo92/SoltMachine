@@ -14,6 +14,8 @@ namespace SoltMachine
             const int NUMBER_OF_COLUMNS = 3;
             const int WINNINGS = 1;
             const int PLAYER_BALANCE = 100;
+            const int MIN_RANDOM_NUMBER = 1;
+            const int MAX_RANDOM_NUMBER = 10;
             
             Random random = new Random();
 
@@ -30,21 +32,18 @@ namespace SoltMachine
                 
                 string bet = Console.ReadLine();
                 
-                if (!Regex.IsMatch(bet, @"^\d+$"))
+                if (!int.TryParse(bet, out int playerBet))
                 {
                     Console.WriteLine("Please enter a valid number.");
                     continue;
                 }
                 
-                int playerBet = int.Parse(bet);
-                
                 if (playerBet > availableBalance)
                 {
                     Console.WriteLine("Not enough cash. Please try again,");
-                   
+                    continue;
                 }
-                else
-                {
+                
 
                     Console.WriteLine($"£{playerBet} bet locked in.");
 
@@ -57,7 +56,7 @@ namespace SoltMachine
                     {
                         for (int j = 0; j < numbers.GetLength(1); j++)
                         {
-                            numbers[i, j] = random.Next(1, 10);
+                            numbers[i, j] = random.Next(MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
                         }
                     }
 
@@ -75,13 +74,13 @@ namespace SoltMachine
                     
 
                     //Row
-                    for (int i = 0; i < NUMBER_OF_ROWS; i++)
+                    for (int row = 0; row < NUMBER_OF_ROWS; row++)
                     {
                         bool rowMatch = true;
 
-                        for (int j = 1; j < NUMBER_OF_COLUMNS; j++)
+                        for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
                         {
-                            if (numbers[i, j] != numbers[i, 0])
+                            if (numbers[row, col] != numbers[row, 0])
                             {
                                 rowMatch = false;
                                 break;
@@ -97,13 +96,13 @@ namespace SoltMachine
                     }
                     
                     //Column
-                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
+                    for (int col = 0; col < NUMBER_OF_COLUMNS; col++)
                     {
                         bool columnMatch = true;
 
-                        for (int i = 1; i < NUMBER_OF_ROWS; i++)
+                        for (int row = 1; row < NUMBER_OF_ROWS; row++)
                         {
-                            if (numbers[i, j] != numbers[0, j])
+                            if (numbers[row, col] != numbers[0, col])
                             {
                                 columnMatch = false;
                                 break;
@@ -121,9 +120,9 @@ namespace SoltMachine
                     
                     //Diagonal 
                     bool diagonalMatch1 = true;
-                    for (int i = 1; i < NUMBER_OF_ROWS; i++)
+                    for (int row = 1; row < NUMBER_OF_ROWS; row++)
                     {
-                        if (numbers[i, i] != numbers[0, 0])
+                        if (numbers[row, row] != numbers[0, 0])
                         {
                             diagonalMatch1 = false;
                             break;
@@ -139,9 +138,9 @@ namespace SoltMachine
 
 
                     bool diagonalMatch2 = true;
-                    for (int i = 1; i < NUMBER_OF_ROWS; i++)
+                    for (int row = 1; row < NUMBER_OF_ROWS; row++)
                     {
-                        if (numbers[i, NUMBER_OF_ROWS - 1 - i] != numbers[0, NUMBER_OF_ROWS - 1])
+                        if (numbers[row, NUMBER_OF_ROWS - 1 - row] != numbers[0, NUMBER_OF_ROWS - 1])
                         {
                             diagonalMatch2 = false;
                             break;
@@ -171,7 +170,7 @@ namespace SoltMachine
                     
                     
 
-                }
+                
             }
         }
     }
