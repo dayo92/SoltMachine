@@ -25,11 +25,11 @@ namespace SoltMachine
 
             int availableBalance = PLAYER_BALANCE;
 
-            bool gameIsOn = true;
+            //bool gameIsOn = true;
             bool matchFound = false;
             
 
-            while (gameIsOn)
+            while (true)
             {
                 
                 Console.WriteLine("Please type in what position you want to match. (R) for Row Match, (C) for Column Match and (D) for Diagonal Match.");
@@ -144,9 +144,9 @@ namespace SoltMachine
                     {
                         // Diagonal 1
                         bool diagonalMatch1 = true;
-                        for (int row = 1; row < NUMBER_OF_ROWS; row++)
+                        for (int diagonal = 1; diagonal < NUMBER_OF_ROWS; diagonal++)
                         {
-                            if (numbers[row, row] != numbers[0, 0])
+                            if (numbers[diagonal, diagonal] != numbers[0, 0])
                             {
                                 diagonalMatch1 = false;
                                 break;
@@ -162,9 +162,9 @@ namespace SoltMachine
 
                         // Diagonal 2
                         bool diagonalMatch2 = true;
-                        for (int row = 0; row < NUMBER_OF_ROWS; row++)
+                        for (int diagonal = 0; diagonal < NUMBER_OF_ROWS; diagonal++)
                         {
-                            if (numbers[row, NUMBER_OF_COLUMNS - 1 - row] != numbers[0, NUMBER_OF_COLUMNS - 1])
+                            if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
                             {
                                 diagonalMatch2 = false;
                                 break;
