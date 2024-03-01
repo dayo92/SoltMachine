@@ -17,9 +17,9 @@ namespace SoltMachine
             const int MIN_RANDOM_NUMBER = 1;
             const int MAX_RANDOM_NUMBER = 10;
             
-            const string ROW_CHAR = "r";
-            const string COLUMN_CHAR = "c";
-            const string Diagonal_CHAR = "d";
+            const string ROW_CHAR = "R";
+            const string COLUMN_CHAR = "C";
+            const string Diagonal_CHAR = "D";
             
             Random random = new Random();
 
@@ -32,12 +32,12 @@ namespace SoltMachine
             while (true)
             {
                 
-                Console.WriteLine("Please type in what position you want to match. (R) for Row Match, (C) for Column Match and (D) for Diagonal Match.");
+                Console.WriteLine($"Please type in what position you want to match. ({ROW_CHAR}) for Row Match, ({COLUMN_CHAR}) for Column Match and ({Diagonal_CHAR}) for Diagonal Match.");
                 string gameChar = Console.ReadLine().ToLower();
                 
-                if (gameChar != ROW_CHAR && gameChar != COLUMN_CHAR && gameChar != Diagonal_CHAR)
+                if (gameChar != ROW_CHAR.ToLower() && gameChar != COLUMN_CHAR.ToLower() && gameChar != Diagonal_CHAR.ToLower())
                 {
-                    Console.WriteLine("Please enter only characters available R,C or D");
+                    Console.WriteLine($"Please enter only characters available {ROW_CHAR}, {COLUMN_CHAR} or {Diagonal_CHAR}");
                     continue;
                 }
                 
@@ -75,7 +75,7 @@ namespace SoltMachine
                     }
                     
 
-                    if (gameChar == ROW_CHAR)
+                    if (gameChar == ROW_CHAR.ToLower())
                     {
                         Console.WriteLine("Enter the row number (1, 2, or 3) you want to check:");
                         if (!int.TryParse(Console.ReadLine(), out int selectedRow) || selectedRow < 1 || selectedRow > NUMBER_OF_ROWS)
@@ -107,7 +107,7 @@ namespace SoltMachine
                         }
                     }
 
-                    if (gameChar == COLUMN_CHAR)
+                    if (gameChar == COLUMN_CHAR.ToLower())
                     {
                         Console.WriteLine("Enter the column number (1, 2, or 3) you want to check:");
                         if (!int.TryParse(Console.ReadLine(), out int selectedCol) || selectedCol < 1 || selectedCol > NUMBER_OF_COLUMNS)
@@ -140,7 +140,7 @@ namespace SoltMachine
                     }
 
 
-                    if (gameChar == Diagonal_CHAR)
+                    if (gameChar == Diagonal_CHAR.ToLower())
                     {
                         // Diagonal 1
                         bool diagonalMatch1 = true;
