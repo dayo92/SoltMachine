@@ -61,150 +61,158 @@ namespace SoltMachine
 
                 Console.WriteLine($"£{playerBet} bet locked in.");
 
-                    availableBalance -= playerBet;
+                availableBalance -= playerBet;
 
-                    int[,] numbers = new int[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
+                int[,] numbers = new int[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
 
                     
-                    for (int i = 0; i < NUMBER_OF_ROWS; i++)
+                for (int i = 0; i < NUMBER_OF_ROWS; i++)
+                {
+                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
                     {
-                        for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
-                        {
-                            numbers[i, j] = random.Next(MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
-                        }
+                        numbers[i, j] = random.Next(MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
+                    }
+                }
+                    
+
+                if (gameChar == ROW_CHAR.ToLower())
+                {
+                    Console.WriteLine("Enter the row number (1, 2, or 3) you want to check:");
+                    
+                    if (!int.TryParse(Console.ReadLine(), out int selectedRow) || selectedRow < 1 || selectedRow > NUMBER_OF_ROWS)
+                    {
+                        Console.WriteLine("Invalid row number. Please try again.");
+                        continue;
                     }
                     
-
-                    if (gameChar == ROW_CHAR.ToLower())
+                    //Row
+                    for (int row = 0; row < NUMBER_OF_ROWS; row++)
                     {
-                        Console.WriteLine("Enter the row number (1, 2, or 3) you want to check:");
-                        if (!int.TryParse(Console.ReadLine(), out int selectedRow) || selectedRow < 1 || selectedRow > NUMBER_OF_ROWS)
-                        {
-                            Console.WriteLine("Invalid row number. Please try again.");
-                            continue;
-                        }
-                        //Row
-                        for (int row = 0; row < NUMBER_OF_ROWS; row++)
-                        {
-                            bool rowMatch = true;
+                        bool rowMatch = true;
 
-                            for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
+                        for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
+                        {
+                            if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
                             {
-                                if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
-                                {
-                                    rowMatch = false;
-                                    break;
-                                }
+                                rowMatch = false;
+                                break;
                             }
+                        }
                         
-                            if (rowMatch)
-                            {
-                                availableBalance += WINNINGS;
-                                Console.WriteLine($"Row match you won £{WINNINGS}.");
-                                matchFound = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (gameChar == COLUMN_CHAR.ToLower())
-                    {
-                        Console.WriteLine("Enter the column number (1, 2, or 3) you want to check:");
-                        if (!int.TryParse(Console.ReadLine(), out int selectedCol) || selectedCol < 1 || selectedCol > NUMBER_OF_COLUMNS)
-                        {
-                            Console.WriteLine("Invalid row number. Please try again.");
-                            continue;
-                        }
-                        //Column
-                        for (int col = 0; col < NUMBER_OF_COLUMNS; col++)
-                        {
-                            bool columnMatch = true;
-
-                            for (int row = 1; row < NUMBER_OF_ROWS; row++)
-                            {
-                                if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
-                                {
-                                    columnMatch = false;
-                                    break;
-                                }
-                            }
-
-                            if (columnMatch)
-                            {
-                                availableBalance += WINNINGS;
-                                Console.WriteLine($"Column match you won £{WINNINGS}.");
-                                matchFound = true;
-                                break;
-                            }
-                        }
-                    }
-
-
-                    if (gameChar == Diagonal_CHAR.ToLower())
-                    {
-                        // Diagonal 1
-                        bool diagonalMatch1 = true;
-                        for (int diagonal = 1; diagonal < NUMBER_OF_ROWS; diagonal++)
-                        {
-                            if (numbers[diagonal, diagonal] != numbers[0, 0])
-                            {
-                                diagonalMatch1 = false;
-                                break;
-                            }
-                        }
-
-                        if (diagonalMatch1)
+                        if (rowMatch)
                         {
                             availableBalance += WINNINGS;
-                            Console.WriteLine($"Diagonal Match1 you won £{WINNINGS}.");
+                            Console.WriteLine($"Row match you won £{WINNINGS}.");
                             matchFound = true;
+                            break;
                         }
+                    }
+                }
 
-                        // Diagonal 2
-                        bool diagonalMatch2 = true;
-                        for (int diagonal = 0; diagonal < NUMBER_OF_ROWS; diagonal++)
+                if (gameChar == COLUMN_CHAR.ToLower())
+                {
+                    Console.WriteLine("Enter the column number (1, 2, or 3) you want to check:");
+                    
+                    if (!int.TryParse(Console.ReadLine(), out int selectedCol) || selectedCol < 1 || selectedCol > NUMBER_OF_COLUMNS)
+                    {
+                        Console.WriteLine("Invalid row number. Please try again.");
+                        continue;
+                    }
+                    
+                    //Column
+                    for (int col = 0; col < NUMBER_OF_COLUMNS; col++)
+                    {
+                        bool columnMatch = true;
+
+                        for (int row = 1; row < NUMBER_OF_ROWS; row++)
                         {
-                            if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
+                            if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
                             {
-                                diagonalMatch2 = false;
+                                columnMatch = false;
                                 break;
                             }
                         }
 
-                        if (diagonalMatch2)
+                        if (columnMatch)
                         {
                             availableBalance += WINNINGS;
-                            Console.WriteLine($"Diagonal Match2 you won £{WINNINGS}.");
+                            Console.WriteLine($"Column match you won £{WINNINGS}.");
                             matchFound = true;
+                            break;
                         }
                     }
+                }
+
+
+                if (gameChar == Diagonal_CHAR.ToLower())
+                {
+                    // Diagonal 1
                     
-                    
-                    if (matchFound)
+                    bool diagonalMatch1 = true;
+                        
+                    for (int diagonal = 1; diagonal < NUMBER_OF_ROWS; diagonal++)
                     {
-                        availableBalance +=  playerBet;
-                        matchFound = false;
-                    } 
-                    
-                    if (availableBalance == 0 )
-                    {
-                        Console.WriteLine("No funds left you lose.");
-                        break;
+                        if (numbers[diagonal, diagonal] != numbers[0, 0])
+                        {
+                            diagonalMatch1 = false;
+                            break;
+                        }
                     }
+
+                    if (diagonalMatch1)
+                    {
+                        availableBalance += WINNINGS;
+                        Console.WriteLine($"Diagonal Match1 you won £{WINNINGS}.");
+                        matchFound = true;
+                    }
+
+                    // Diagonal 2
+                    
+                    bool diagonalMatch2 = true;
+                        
+                    for (int diagonal = 0; diagonal < NUMBER_OF_ROWS; diagonal++)
+                    {
+                        if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
+                        {
+                            diagonalMatch2 = false;
+                            break;
+                        }
+                    }
+
+                    if (diagonalMatch2)
+                    {
+                        availableBalance += WINNINGS;
+                        Console.WriteLine($"Diagonal Match2 you won £{WINNINGS}.");
+                        matchFound = true;
+                    }
+                }
+                    
+                    
+                if (matchFound)
+                {
+                    availableBalance +=  playerBet;
+                    matchFound = false;
+                } 
+                    
+                if (availableBalance == 0 )
+                {
+                    Console.WriteLine("No funds left you lose.");
+                    break;
+                }
                   
-                    Console.WriteLine($"Your remaining balance is £{availableBalance}");
+                Console.WriteLine($"Your remaining balance is £{availableBalance}");
                     
-                    Console.WriteLine("Slot Numbers:");
+                Console.WriteLine("Slot Numbers:");
                     
-                    for (int i = 0; i < NUMBER_OF_ROWS; i++)
+                for (int i = 0; i < NUMBER_OF_ROWS; i++)
+                {
+                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
                     {
-                        for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
-                        {
-                            Console.Write(numbers[i, j] + " ");
-                        }
-
-                        Console.WriteLine();
+                        Console.Write(numbers[i, j] + " ");
                     }
+
+                    Console.WriteLine();
+                }
                 
             }
         }
