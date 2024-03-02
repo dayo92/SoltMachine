@@ -25,7 +25,7 @@ namespace SoltMachine
 
             int availableBalance = PLAYER_BALANCE;
 
-            //bool gameIsOn = true;
+            
             bool matchFound = false;
             
 
