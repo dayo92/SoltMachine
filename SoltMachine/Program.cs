@@ -101,7 +101,6 @@ namespace SoltMachine
                         
                         if (rowMatch)
                         {
-                            availableBalance += WINNINGS;
                             Console.WriteLine($"Row match you won £{WINNINGS}.");
                             matchFound = true;
                             break;
@@ -135,7 +134,6 @@ namespace SoltMachine
 
                         if (columnMatch)
                         {
-                            availableBalance += WINNINGS;
                             Console.WriteLine($"Column match you won £{WINNINGS}.");
                             matchFound = true;
                             break;
@@ -161,7 +159,6 @@ namespace SoltMachine
 
                     if (diagonalMatch1)
                     {
-                        availableBalance += WINNINGS;
                         Console.WriteLine($"Diagonal Match1 you won £{WINNINGS}.");
                         matchFound = true;
                     }
@@ -181,7 +178,6 @@ namespace SoltMachine
 
                     if (diagonalMatch2)
                     {
-                        availableBalance += WINNINGS;
                         Console.WriteLine($"Diagonal Match2 you won £{WINNINGS}.");
                         matchFound = true;
                     }
@@ -190,7 +186,7 @@ namespace SoltMachine
                     
                 if (matchFound)
                 {
-                    availableBalance +=  playerBet;
+                    availableBalance += playerBet + WINNINGS;
                     matchFound = false;
                 } 
                     
