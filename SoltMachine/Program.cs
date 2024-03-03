@@ -96,25 +96,24 @@ namespace SoltMachine
                     }
                     
                     //Row
-                    for (int row = 0; row < NUMBER_OF_ROWS; row++)
+                    bool rowMatch = true;
+                    for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
                     {
-                        bool rowMatch = true;
-
-                        for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
+                        if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
                         {
-                            if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
-                            {
-                                rowMatch = false;
-                                break;
-                            }
-                        }
-                        
-                        if (rowMatch)
-                        {
-                            Console.WriteLine($"Row match you won £{WINNINGS}.");
-                            matchFound = true;
+                            rowMatch = false;
                             break;
                         }
+                    }
+    
+                    if (rowMatch)
+                    {
+                        Console.WriteLine($"Row match found you won £{WINNINGS}.");
+                        matchFound = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No match found in row {selectedRow}.");
                     }
                 }
 
@@ -129,8 +128,7 @@ namespace SoltMachine
                     }
                     
                     //Column
-                    for (int col = 0; col < NUMBER_OF_COLUMNS; col++)
-                    {
+                    
                         bool columnMatch = true;
 
                         for (int row = 1; row < NUMBER_OF_ROWS; row++)
@@ -144,11 +142,15 @@ namespace SoltMachine
 
                         if (columnMatch)
                         {
-                            Console.WriteLine($"Column match you won £{WINNINGS}.");
+                            Console.WriteLine($"Column match found you won £{WINNINGS}.");
                             matchFound = true;
-                            break;
+                            
                         }
-                    }
+                        else
+                        {
+                            Console.WriteLine($"No match found in column {selectedCol}.");
+                        }
+                    
                 }
 
 
