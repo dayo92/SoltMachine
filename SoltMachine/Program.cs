@@ -42,15 +42,24 @@ namespace SoltMachine
                 }
                 
                 Console.WriteLine($"Your available balance is £{availableBalance}.");
-                Console.Write("How much would you like to bet? ");
+            
+
+                int playerBet = 0;
+                bool isValid = false;
                 
-                string bet = Console.ReadLine();
-                
-                if (!int.TryParse(bet, out int playerBet))
+                while (!isValid)
                 {
-                    Console.WriteLine("Please enter a valid number.");
-                    continue;
+                    Console.Write("How much would you like to bet? ");
+                    string bet = Console.ReadLine();
+
+                    isValid = int.TryParse(bet, out playerBet);
+    
+                    if (!isValid)
+                    {
+                        Console.WriteLine("Please enter a valid number.");
+                    }
                 }
+                
                 
                 if (playerBet > availableBalance)
                 {
