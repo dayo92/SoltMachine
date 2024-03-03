@@ -17,9 +17,9 @@ namespace SoltMachine
             const int MIN_RANDOM_NUMBER = 1;
             const int MAX_RANDOM_NUMBER = 10;
             
-            const string ROW_CHAR = "R";
-            const string COLUMN_CHAR = "C";
-            const string Diagonal_CHAR = "D";
+            const char ROW_CHAR = 'R';
+            const char COLUMN_CHAR = 'C';
+            const char Diagonal_CHAR = 'D';
             
             Random random = new Random();
 
@@ -33,9 +33,10 @@ namespace SoltMachine
             {
                 
                 Console.WriteLine($"Please type in what position you want to match. ({ROW_CHAR}) for Row Match, ({COLUMN_CHAR}) for Column Match and ({Diagonal_CHAR}) for Diagonal Match.");
-                string gameChar = Console.ReadLine().ToLower();
+                char gameChar = char.ToUpper(Console.ReadKey().KeyChar);
+                Console.WriteLine();
                 
-                if (gameChar != ROW_CHAR.ToLower() && gameChar != COLUMN_CHAR.ToLower() && gameChar != Diagonal_CHAR.ToLower())
+                if (gameChar != ROW_CHAR && gameChar != COLUMN_CHAR && gameChar != Diagonal_CHAR)
                 {
                     Console.WriteLine($"Please enter only characters available {ROW_CHAR}, {COLUMN_CHAR} or {Diagonal_CHAR}");
                     continue;
@@ -84,7 +85,7 @@ namespace SoltMachine
                 }
                     
 
-                if (gameChar == ROW_CHAR.ToLower())
+                if (gameChar == ROW_CHAR)
                 {
                     Console.WriteLine("Enter the row number (1, 2, or 3) you want to check:");
                     
@@ -117,7 +118,7 @@ namespace SoltMachine
                     }
                 }
 
-                if (gameChar == COLUMN_CHAR.ToLower())
+                if (gameChar == COLUMN_CHAR)
                 {
                     Console.WriteLine("Enter the column number (1, 2, or 3) you want to check:");
                     
@@ -151,7 +152,7 @@ namespace SoltMachine
                 }
 
 
-                if (gameChar == Diagonal_CHAR.ToLower())
+                if (gameChar == Diagonal_CHAR)
                 {
                     // Diagonal 1
                     
