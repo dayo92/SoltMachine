@@ -21,6 +21,11 @@ namespace SoltMachine
             const char COLUMN_CHAR = 'C';
             const char Diagonal_CHAR = 'D';
             
+            bool rowMatch = true;
+            bool columnMatch = true;
+            bool diagonalMatch1 = true;
+            bool diagonalMatch2 = true;
+            
             Random random = new Random();
 
             int availableBalance = PLAYER_BALANCE;
@@ -32,15 +37,7 @@ namespace SoltMachine
             while (true)
             {
                 
-                Console.WriteLine($"Please type in what position you want to match. ({ROW_CHAR}) for Row Match, ({COLUMN_CHAR}) for Column Match and ({Diagonal_CHAR}) for Diagonal Match.");
-                char gameChar = char.ToUpper(Console.ReadKey().KeyChar);
-                Console.WriteLine();
-                
-                if (gameChar != ROW_CHAR && gameChar != COLUMN_CHAR && gameChar != Diagonal_CHAR)
-                {
-                    Console.WriteLine($"Please enter only characters available {ROW_CHAR}, {COLUMN_CHAR} or {Diagonal_CHAR}");
-                    continue;
-                }
+                char gameChar = GetPlayerChar();
                 
                 Console.WriteLine($"Your available balance is £{availableBalance}.");
             
@@ -96,26 +93,13 @@ namespace SoltMachine
                     }
                     
                     //Row
-                    bool rowMatch = true;
-                    for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
-                    {
-                        if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
-                        {
-                            rowMatch = false;
-                            break;
-                        }
-                    }
-    
-                    if (rowMatch)
-                    {
-                        Console.WriteLine($"Row match found you won £{WINNINGS}.");
-                        matchFound = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"No match found in row {selectedRow}.");
-                    }
+                    
+                    Console.WriteLine(1+" here");
+                    matchFound = CheckRowMatch(numbers, selectedRow);
+                    
                 }
+                
+                
 
                 if (gameChar == COLUMN_CHAR)
                 {
@@ -128,29 +112,9 @@ namespace SoltMachine
                     }
                     
                     //Column
-                    
-                        bool columnMatch = true;
 
-                        for (int row = 1; row < NUMBER_OF_ROWS; row++)
-                        {
-                            if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
-                            {
-                                columnMatch = false;
-                                break;
-                            }
-                        }
+                    matchFound = CheckColumnMatch(numbers, selectedCol);
 
-                        if (columnMatch)
-                        {
-                            Console.WriteLine($"Column match found you won £{WINNINGS}.");
-                            matchFound = true;
-                            
-                        }
-                        else
-                        {
-                            Console.WriteLine($"No match found in column {selectedCol}.");
-                        }
-                    
                 }
 
 
@@ -158,41 +122,13 @@ namespace SoltMachine
                 {
                     // Diagonal 1
                     
-                    bool diagonalMatch1 = true;
-                        
-                    for (int diagonal = 1; diagonal < NUMBER_OF_ROWS; diagonal++)
-                    {
-                        if (numbers[diagonal, diagonal] != numbers[0, 0])
-                        {
-                            diagonalMatch1 = false;
-                            break;
-                        }
-                    }
-
-                    if (diagonalMatch1)
-                    {
-                        Console.WriteLine($"Diagonal Match1 you won £{WINNINGS}.");
-                        matchFound = true;
-                    }
+                    matchFound = CheckDiagonalMatch1(numbers);
+               
 
                     // Diagonal 2
                     
-                    bool diagonalMatch2 = true;
-                        
-                    for (int diagonal = 0; diagonal < NUMBER_OF_ROWS; diagonal++)
-                    {
-                        if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
-                        {
-                            diagonalMatch2 = false;
-                            break;
-                        }
-                    }
-
-                    if (diagonalMatch2)
-                    {
-                        Console.WriteLine($"Diagonal Match2 you won £{WINNINGS}.");
-                        matchFound = true;
-                    }
+                    matchFound = CheckDiagonalMatch2(numbers);
+                    
                 }
                     
                     
@@ -222,6 +158,111 @@ namespace SoltMachine
                     Console.WriteLine();
                 }
                 
+            }
+            
+            char GetPlayerChar()
+            {
+                Console.WriteLine($"Please type in what position you want to match. (R) for Row Match, (C) for Column Match, and (D) for Diagonal Match.");
+                char gameChar = char.ToUpper(Console.ReadKey().KeyChar);
+                Console.WriteLine();
+
+                if (gameChar != ROW_CHAR && gameChar != COLUMN_CHAR && gameChar != Diagonal_CHAR)
+                {
+                    Console.WriteLine($"Please enter only characters available {ROW_CHAR}, {COLUMN_CHAR}, or {Diagonal_CHAR}");
+                     
+                }
+
+                return gameChar;
+            }
+            
+            bool CheckRowMatch(int[,] numbers, int selectedRow)
+            {
+                
+                for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
+                {
+                    if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
+                    {
+                        return rowMatch = true;
+                    }
+                    if (rowMatch)
+                    {
+                        Console.WriteLine($"Row match found you won £{WINNINGS}.");
+                        matchFound = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No match found in row {selectedRow}.");
+                    }
+                }
+                return true;
+                
+            }
+            
+            bool CheckColumnMatch(int[,] numbers, int selectedCol)
+            {
+                for (int row = 1; row < NUMBER_OF_ROWS; row++)
+                {
+                    if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
+                    {
+                      return columnMatch = false;
+                    }
+                }
+
+                if (columnMatch)
+                {
+                    Console.WriteLine($"Column match found you won £{WINNINGS}.");
+                    matchFound = true;
+                            
+                }
+                else
+                {
+                    Console.WriteLine($"No match found in column {selectedCol}.");
+                }
+
+                return true;
+
+            }
+            
+            bool CheckDiagonalMatch1(int[,]numbers)
+            {
+                for (int diagonal = 1; diagonal < NUMBER_OF_ROWS; diagonal++)
+                {
+                    if (numbers[diagonal, diagonal] != numbers[0, 0])
+                    {
+                        diagonalMatch1 = false;
+                      
+                    }
+                }
+
+                if (diagonalMatch1)
+                {
+                    Console.WriteLine($"Diagonal Match1 you won £{WINNINGS}.");
+                    matchFound = true;
+                }
+
+                return true;
+
+            }
+            
+            bool CheckDiagonalMatch2(int[,]numbers)
+            {
+                for (int diagonal = 0; diagonal < NUMBER_OF_ROWS; diagonal++)
+                {
+                    if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
+                    {
+                        diagonalMatch2 = false;
+                        break;
+                    }
+                }
+
+                if (diagonalMatch2)
+                {
+                    Console.WriteLine($"Diagonal Match2 you won £{WINNINGS}.");
+                    matchFound = true;
+                }
+
+                return true;
+
             }
         }
     }
