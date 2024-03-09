@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using SoltMachine;
+
+
 
 namespace SoltMachine
 {
@@ -8,20 +11,25 @@ namespace SoltMachine
         public static void Main(string[] args)
         {
             
-            Console.WriteLine("Slot Machine Game");
+            UIMethods.GameTittle();
 
             const int NUMBER_OF_ROWS = 3;
             const int NUMBER_OF_COLUMNS = 3;
             const int WINNINGS = 1;
             const int PLAYER_BALANCE = 100;
             const int MIN_RANDOM_NUMBER = 1;
-            const int MAX_RANDOM_NUMBER = 10;
+            const int MAX_RANDOM_NUMBER = 3;
             
             const char ROW_CHAR = 'R';
             const char COLUMN_CHAR = 'C';
             const char Diagonal_CHAR = 'D';
+
+            const string ROW = "Row";
+            const string COLUMN = "Column";
+            const string DIAGONAL = "Diagonal";
+            const string DIAGONAL2 = "Diagonal 2";
             
-            bool rowMatch = true;
+           
             bool columnMatch = true;
             bool diagonalMatch1 = true;
             bool diagonalMatch2 = true;
@@ -39,7 +47,7 @@ namespace SoltMachine
                 
                 char gameChar = GetPlayerChar();
                 
-                Console.WriteLine($"Your available balance is £{availableBalance}.");
+                UIMethods.AvailableBalance(availableBalance);
             
 
                 int playerBet = 0;
@@ -47,26 +55,26 @@ namespace SoltMachine
                 
                 while (!isValid)
                 {
-                    Console.Write("How much would you like to bet? ");
+                    UIMethods.BettingQuestion();
                     string bet = Console.ReadLine();
 
                     isValid = int.TryParse(bet, out playerBet);
     
                     if (!isValid)
                     {
-                        Console.WriteLine("Please enter a valid number.");
+                        UIMethods.InvalidNumber();
                     }
                 }
                 
                 
                 if (playerBet > availableBalance)
                 {
-                    Console.WriteLine("Not enough cash. Please try again,");
+                    UIMethods.LowBalance();
                     continue;
                 }
                 
 
-                Console.WriteLine($"£{playerBet} bet locked in.");
+                UIMethods.LockedBet(playerBet);
 
                 availableBalance -= playerBet;
 
@@ -84,17 +92,16 @@ namespace SoltMachine
 
                 if (gameChar == ROW_CHAR)
                 {
-                    Console.WriteLine("Enter the row number (1, 2, or 3) you want to check:");
+                    UIMethods.EnterNumber(ROW);
                     
                     if (!int.TryParse(Console.ReadLine(), out int selectedRow) || selectedRow < 1 || selectedRow > NUMBER_OF_ROWS)
                     {
-                        Console.WriteLine("Invalid row number. Please try again.");
+                        UIMethods.InvalidNumber();
                         continue;
                     }
                     
                     //Row
                     
-                    Console.WriteLine(1+" here");
                     matchFound = CheckRowMatch(numbers, selectedRow);
                     
                 }
@@ -103,11 +110,11 @@ namespace SoltMachine
 
                 if (gameChar == COLUMN_CHAR)
                 {
-                    Console.WriteLine("Enter the column number (1, 2, or 3) you want to check:");
+                    UIMethods.EnterNumber(COLUMN);  
                     
                     if (!int.TryParse(Console.ReadLine(), out int selectedCol) || selectedCol < 1 || selectedCol > NUMBER_OF_COLUMNS)
                     {
-                        Console.WriteLine("Invalid row number. Please try again.");
+                        UIMethods.InvalidNumber();
                         continue;
                     }
                     
@@ -140,19 +147,19 @@ namespace SoltMachine
                     
                 if (availableBalance == 0 )
                 {
-                    Console.WriteLine("No funds left you lose.");
+                    UIMethods.NoFunds();
                     break;
                 }
                   
-                Console.WriteLine($"Your remaining balance is £{availableBalance}");
+                UIMethods.RemainingBalance(availableBalance);
                     
-                Console.WriteLine("Slot Numbers:");
+                UIMethods.SlotNumberTitle();
                     
                 for (int i = 0; i < NUMBER_OF_ROWS; i++)
                 {
                     for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
                     {
-                        Console.Write(numbers[i, j] + " ");
+                        UIMethods.Grid(numbers, i, j);
                     }
 
                     Console.WriteLine();
@@ -162,14 +169,14 @@ namespace SoltMachine
             
             char GetPlayerChar()
             {
-                Console.WriteLine($"Please type in what position you want to match. (R) for Row Match, (C) for Column Match, and (D) for Diagonal Match.");
+                UIMethods.text(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
+                
                 char gameChar = char.ToUpper(Console.ReadKey().KeyChar);
                 Console.WriteLine();
 
                 if (gameChar != ROW_CHAR && gameChar != COLUMN_CHAR && gameChar != Diagonal_CHAR)
                 {
-                    Console.WriteLine($"Please enter only characters available {ROW_CHAR}, {COLUMN_CHAR}, or {Diagonal_CHAR}");
-                     
+                    UIMethods.InvalidChar(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
                 }
 
                 return gameChar;
@@ -182,18 +189,13 @@ namespace SoltMachine
                 {
                     if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
                     {
-                        return rowMatch = true;
-                    }
-                    if (rowMatch)
-                    {
-                        Console.WriteLine($"Row match found you won £{WINNINGS}.");
-                        matchFound = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"No match found in row {selectedRow}.");
+                        UIMethods.NoMatchfound(selectedRow);
+                        return false;
                     }
                 }
+                
+                UIMethods.Matchfound(ROW,WINNINGS);
+                
                 return true;
                 
             }
@@ -203,22 +205,16 @@ namespace SoltMachine
                 for (int row = 1; row < NUMBER_OF_ROWS; row++)
                 {
                     if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
-                    {
-                      return columnMatch = false;
+                    { 
+                        UIMethods.NoMatchfound(selectedCol);
+
+                        return false;
                     }
                 }
 
-                if (columnMatch)
-                {
-                    Console.WriteLine($"Column match found you won £{WINNINGS}.");
-                    matchFound = true;
-                            
-                }
-                else
-                {
-                    Console.WriteLine($"No match found in column {selectedCol}.");
-                }
-
+            
+                UIMethods.Matchfound(COLUMN,WINNINGS);
+                
                 return true;
 
             }
@@ -229,16 +225,13 @@ namespace SoltMachine
                 {
                     if (numbers[diagonal, diagonal] != numbers[0, 0])
                     {
-                        diagonalMatch1 = false;
+                        return false;
                       
                     }
                 }
 
-                if (diagonalMatch1)
-                {
-                    Console.WriteLine($"Diagonal Match1 you won £{WINNINGS}.");
-                    matchFound = true;
-                }
+                UIMethods.Matchfound(DIAGONAL,WINNINGS);
+             
 
                 return true;
 
@@ -250,16 +243,12 @@ namespace SoltMachine
                 {
                     if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
                     {
-                        diagonalMatch2 = false;
-                        break;
+                       return false;
+                       
                     }
                 }
 
-                if (diagonalMatch2)
-                {
-                    Console.WriteLine($"Diagonal Match2 you won £{WINNINGS}.");
-                    matchFound = true;
-                }
+                UIMethods.Matchfound(DIAGONAL2,WINNINGS);
 
                 return true;
 
