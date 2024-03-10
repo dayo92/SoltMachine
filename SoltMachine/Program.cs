@@ -33,8 +33,6 @@ namespace SoltMachine
             bool columnMatch = true;
             bool diagonalMatch1 = true;
             bool diagonalMatch2 = true;
-            
-            Random random = new Random();
 
             int availableBalance = PLAYER_BALANCE;
 
@@ -45,7 +43,7 @@ namespace SoltMachine
             while (true)
             {
                 
-                char gameChar = GetPlayerChar();
+                char gameChar = Logic.GetPlayerChar(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
                 
                 UIMethods.AvailableBalance(availableBalance);
             
@@ -55,8 +53,8 @@ namespace SoltMachine
                 
                 while (!isValid)
                 {
-                    UIMethods.BettingQuestion();
-                    string bet = Console.ReadLine();
+                    
+                    string bet = UIMethods.BettingQuestion();
 
                     isValid = int.TryParse(bet, out playerBet);
     
@@ -78,23 +76,15 @@ namespace SoltMachine
 
                 availableBalance -= playerBet;
 
-                int[,] numbers = new int[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
-
-                    
-                for (int i = 0; i < NUMBER_OF_ROWS; i++)
-                {
-                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
-                    {
-                        numbers[i, j] = random.Next(MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
-                    }
-                }
+                int[,] numbers = Logic.GenerateRandomNumbers(NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, MIN_RANDOM_NUMBER,
+                    MAX_RANDOM_NUMBER);
+              
                     
 
                 if (gameChar == ROW_CHAR)
                 {
-                    UIMethods.EnterNumber(ROW);
                     
-                    if (!int.TryParse(Console.ReadLine(), out int selectedRow) || selectedRow < 1 || selectedRow > NUMBER_OF_ROWS)
+                    if (!int.TryParse(UIMethods.EnterNumber(ROW), out int selectedRow) || selectedRow < 1 || selectedRow > NUMBER_OF_ROWS)
                     {
                         UIMethods.InvalidNumber();
                         continue;
@@ -102,6 +92,7 @@ namespace SoltMachine
                     
                     //Row
                     
+                    //matchFound = CheckRowMatch(numbers, selectedRow);
                     matchFound = CheckRowMatch(numbers, selectedRow);
                     
                 }
@@ -167,20 +158,7 @@ namespace SoltMachine
                 
             }
             
-            char GetPlayerChar()
-            {
-                UIMethods.text(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
-                
-                char gameChar = char.ToUpper(Console.ReadKey().KeyChar);
-                Console.WriteLine();
-
-                if (gameChar != ROW_CHAR && gameChar != COLUMN_CHAR && gameChar != Diagonal_CHAR)
-                {
-                    UIMethods.InvalidChar(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
-                }
-
-                return gameChar;
-            }
+            
             
             bool CheckRowMatch(int[,] numbers, int selectedRow)
             {

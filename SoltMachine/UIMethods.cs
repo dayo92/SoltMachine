@@ -14,9 +14,9 @@ namespace SoltMachine
              Console.WriteLine($"Your available balance is £{availableBalance}.");
          }
         
-        public static void BettingQuestion()
+        public static string BettingQuestion()
         {
-            Console.Write("How much would you like to bet? ");
+            return GetAnswer("How much would you like to bet? ");
         } 
         
         public static void InvalidNumber()
@@ -34,9 +34,9 @@ namespace SoltMachine
             Console.WriteLine($"£{playerBet} bet locked in.");
         } 
         
-        public static void EnterNumber( string postion)
+        public static string EnterNumber( string position)
         {
-            Console.WriteLine($"Enter the {postion} number (1, 2, or 3) you want to check:");
+           return GetAnswer($"Enter the {position} number (1, 2, or 3) you want to check:");
         } 
         
         public static void NoFunds()
@@ -78,6 +78,16 @@ namespace SoltMachine
         {
             Console.WriteLine($"No match found in row {selectedRow}.");
             
+        } 
+        
+        public static string GetAnswer(string question)
+        {
+            Console.WriteLine($"{question}");
+
+            string answer = Console.ReadLine();
+
+            return answer;
+
         } 
         
      
