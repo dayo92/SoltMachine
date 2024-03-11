@@ -74,8 +74,6 @@ namespace SoltMachine
 
                 int[,] numbers = Logic.GenerateRandomNumbers(NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, MIN_RANDOM_NUMBER,
                     MAX_RANDOM_NUMBER);
-              
-                    
 
                 if (gameChar == ROW_CHAR)
                 {
@@ -88,7 +86,7 @@ namespace SoltMachine
                     
                     //Row
                     
-                    matchFound = CheckRowMatch(numbers, selectedRow);
+                    matchFound = Logic.CheckRowMatch(numbers, selectedRow, NUMBER_OF_COLUMNS, ROW, WINNINGS);
                     
                 }
                 
@@ -122,7 +120,6 @@ namespace SoltMachine
                     
                     
                     matchFound = diagonalMatch1 || diagonalMatch2;
-                    
                 }
                     
                     
@@ -141,38 +138,12 @@ namespace SoltMachine
                 UIMethods.RemainingBalance(availableBalance);
                     
                 UIMethods.SlotNumberTitle();
-                    
-                for (int i = 0; i < NUMBER_OF_ROWS; i++)
-                {
-                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
-                    {
-                        UIMethods.Grid(numbers, i, j);
-                    }
-
-                    Console.WriteLine();
-                }
                 
+                Logic.DisplayGrid(numbers,NUMBER_OF_ROWS, NUMBER_OF_COLUMNS);
             }
             
             
             
-            bool CheckRowMatch(int[,] numbers, int selectedRow)
-            {
-                
-                for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
-                {
-                    if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
-                    {
-                        UIMethods.NoMatchfound(selectedRow);
-                        return false;
-                    }
-                }
-                
-                UIMethods.Matchfound(ROW,WINNINGS);
-                
-                return true;
-                
-            }
             
             bool CheckColumnMatch(int[,] numbers, int selectedCol)
             {

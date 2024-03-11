@@ -37,6 +37,56 @@ namespace SoltMachine
                 return gameChar;
             }
             
+            
+            public static void DisplayGrid(int[,] numbers, int NUMBER_OF_ROWS, int NUMBER_OF_COLUMNS)
+            {
+                for (int i = 0; i < NUMBER_OF_ROWS; i++)
+                {
+                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
+                    {
+                        UIMethods.Grid(numbers, i, j);
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+            
+            public static bool CheckRowMatch(int[,] numbers, int selectedRow,int NUMBER_OF_COLUMNS, string ROW, int WINNINGS)
+            {
+                
+                for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
+                {
+                    if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
+                    {
+                        UIMethods.NoMatchfound(selectedRow);
+                        return false;
+                    }
+                }
+                
+                UIMethods.Matchfound(ROW,WINNINGS);
+                
+                return true;
+                
+            }
+            
+            public static bool CheckColumnMatch(int[,] numbers, int selectedCol, int NUMBER_OF_ROWS, string COLUMN, int WINNINGS)
+            {
+                for (int row = 1; row < NUMBER_OF_ROWS; row++)
+                {
+                    if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
+                    { 
+                        UIMethods.NoMatchfound(selectedCol);
+
+                        return false;
+                    }
+                }
+
+            
+                UIMethods.Matchfound(COLUMN,WINNINGS);
+                
+                return true;
+
+            }
          
             
             
