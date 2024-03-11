@@ -29,10 +29,6 @@ namespace SoltMachine
             const string DIAGONAL = "Diagonal";
             const string DIAGONAL2 = "Diagonal 2";
             
-           
-            bool columnMatch = true;
-            bool diagonalMatch1 = true;
-            bool diagonalMatch2 = true;
 
             int availableBalance = PLAYER_BALANCE;
 
@@ -92,7 +88,6 @@ namespace SoltMachine
                     
                     //Row
                     
-                    //matchFound = CheckRowMatch(numbers, selectedRow);
                     matchFound = CheckRowMatch(numbers, selectedRow);
                     
                 }
@@ -120,12 +115,13 @@ namespace SoltMachine
                 {
                     // Diagonal 1
                     
-                    matchFound = CheckDiagonalMatch1(numbers);
-               
+                    bool diagonalMatch1 = CheckDiagonalMatch1(numbers);
 
                     // Diagonal 2
+                    bool diagonalMatch2 = diagonalMatch1 ? false : CheckDiagonalMatch2(numbers);
                     
-                    matchFound = CheckDiagonalMatch2(numbers);
+                    
+                    matchFound = diagonalMatch1 || diagonalMatch2;
                     
                 }
                     
@@ -221,15 +217,13 @@ namespace SoltMachine
                 {
                     if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
                     {
-                       return false;
-                       
+                        return false;
                     }
                 }
 
                 UIMethods.Matchfound(DIAGONAL2,WINNINGS);
 
                 return true;
-
             }
         }
     }
