@@ -4,7 +4,7 @@ namespace SoltMachine
 {
     public static class UIMethods
     {
-        public static void GameTittle()
+        public static void PrintGameTitle()
         {
             Console.WriteLine("Slot Machine Game");
         } 

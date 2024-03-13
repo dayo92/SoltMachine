@@ -9,7 +9,7 @@ namespace SoltMachine
     {
         public static void Main(string[] args)
         {
-            UIMethods.GameTittle();
+            UIMethods.PrintGameTitle();
 
             const int NUMBER_OF_ROWS = 3;
             const int NUMBER_OF_COLUMNS = 3;
