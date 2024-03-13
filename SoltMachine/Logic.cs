@@ -74,36 +74,49 @@ namespace SoltMachine
                 for (int row = 1; row < NUMBER_OF_ROWS; row++)
                 {
                     if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
-                    { 
+                    {
                         UIMethods.NoMatchfound(selectedCol);
 
                         return false;
                     }
                 }
 
-            
-                UIMethods.Matchfound(COLUMN,WINNINGS);
-                
-                return true;
 
+                UIMethods.Matchfound(COLUMN, WINNINGS);
+
+                return true;
             }
-         
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        
-       
-            
+            public static bool CheckDiagonalMatch1(int[,] numbers, int NUMBER_OF_ROWS, string DIAGONAL, int WINNINGS)
+            {
+                for (int diagonal = 1; diagonal < NUMBER_OF_ROWS; diagonal++)
+                {
+                    if (numbers[diagonal, diagonal] != numbers[0, 0])
+                    {
+                        return false;
+                    }
+                }
+
+                UIMethods.Matchfound(DIAGONAL, WINNINGS);
+
+
+                return true;
+            }
+
+            public static bool CheckDiagonalMatch2(int[,] numbers, int NUMBER_OF_ROWS, int NUMBER_OF_COLUMNS, string DIAGONAL2, int WINNINGS)
+            {
+                for (int diagonal = 0; diagonal < NUMBER_OF_ROWS; diagonal++)
+                {
+                    if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
+                    {
+                        return false;
+                    }
+                }
+
+                UIMethods.Matchfound(DIAGONAL2, WINNINGS);
+
+                return true;
+            }
             
     }
 }

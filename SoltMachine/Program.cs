@@ -98,7 +98,7 @@ namespace SoltMachine
 
                     //Column
 
-                    matchFound = CheckColumnMatch(numbers, selectedCol);
+                    matchFound = Logic.CheckColumnMatch(numbers, selectedCol, NUMBER_OF_ROWS, COLUMN, WINNINGS);
                 }
 
 
@@ -106,10 +106,10 @@ namespace SoltMachine
                 {
                     // Diagonal 1
 
-                    bool diagonalMatch1 = CheckDiagonalMatch1(numbers);
+                    bool diagonalMatch1 = Logic.CheckDiagonalMatch1(numbers, NUMBER_OF_ROWS, DIAGONAL, WINNINGS);
 
                     // Diagonal 2
-                    bool diagonalMatch2 = diagonalMatch1 ? false : CheckDiagonalMatch2(numbers);
+                    bool diagonalMatch2 = diagonalMatch1 ? false : Logic.CheckDiagonalMatch2(numbers, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, DIAGONAL2, WINNINGS);
 
 
                     matchFound = diagonalMatch1 || diagonalMatch2;
@@ -133,56 +133,8 @@ namespace SoltMachine
 
                 Logic.DisplayGrid(numbers, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS);
             }
-
-
-            bool CheckColumnMatch(int[,] numbers, int selectedCol)
-            {
-                for (int row = 1; row < NUMBER_OF_ROWS; row++)
-                {
-                    if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
-                    {
-                        UIMethods.NoMatchfound(selectedCol);
-
-                        return false;
-                    }
-                }
-
-
-                UIMethods.Matchfound(COLUMN, WINNINGS);
-
-                return true;
-            }
-
-            bool CheckDiagonalMatch1(int[,] numbers)
-            {
-                for (int diagonal = 1; diagonal < NUMBER_OF_ROWS; diagonal++)
-                {
-                    if (numbers[diagonal, diagonal] != numbers[0, 0])
-                    {
-                        return false;
-                    }
-                }
-
-                UIMethods.Matchfound(DIAGONAL, WINNINGS);
-
-
-                return true;
-            }
-
-            bool CheckDiagonalMatch2(int[,] numbers)
-            {
-                for (int diagonal = 0; diagonal < NUMBER_OF_ROWS; diagonal++)
-                {
-                    if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
-                    {
-                        return false;
-                    }
-                }
-
-                UIMethods.Matchfound(DIAGONAL2, WINNINGS);
-
-                return true;
-            }
+            
+            
         }
     }
 }
