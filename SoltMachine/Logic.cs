@@ -58,12 +58,12 @@ namespace SoltMachine
                 {
                     if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
                     {
-                        UIMethods.NoMatchfound(selectedRow);
+                        //UIMethods.NoMatchfound(selectedRow);
                         return false;
                     }
                 }
                 
-                UIMethods.Matchfound(Program.ROW,Program.WINNINGS);
+                //UIMethods.Matchfound(Program.ROW,Program.WINNINGS);
                 
                 return true;
                 
@@ -76,14 +76,14 @@ namespace SoltMachine
                 {
                     if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
                     {
-                        UIMethods.NoMatchfound(selectedCol);
+                        //UIMethods.NoMatchfound(selectedCol);
 
                         return false;
                     }
                 }
 
 
-                UIMethods.Matchfound(Program.COLUMN, Program.WINNINGS);
+                //UIMethods.Matchfound(Program.COLUMN, Program.WINNINGS);
 
                 return true;
             }
@@ -98,7 +98,7 @@ namespace SoltMachine
                     }
                 }
 
-                UIMethods.Matchfound(Program.DIAGONAL, Program.WINNINGS);
+                //UIMethods.Matchfound(Program.DIAGONAL, Program.WINNINGS);
 
 
                 return true;
@@ -114,7 +114,7 @@ namespace SoltMachine
                     }
                 }
 
-                UIMethods.Matchfound(Program.DIAGONAL2, Program.WINNINGS);
+                //UIMethods.Matchfound(Program.DIAGONAL2, Program.WINNINGS);
 
                 return true;
             }

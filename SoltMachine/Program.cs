@@ -74,7 +74,7 @@ namespace SoltMachine
                         selectedRow > NUMBER_OF_ROWS)
                     {
                         UIMethods.InvalidNumber();
-                        continue;
+                        return;
                     }
 
                     //Row
@@ -85,13 +85,12 @@ namespace SoltMachine
 
                 if (gameChar == COLUMN_CHAR)
                 {
-                    UIMethods.EnterNumber(COLUMN);
 
-                    if (!int.TryParse(Console.ReadLine(), out int selectedCol) || selectedCol < 1 ||
+                    if (!int.TryParse(UIMethods.EnterNumber(COLUMN), out int selectedCol) || selectedCol < 1 ||
                         selectedCol > NUMBER_OF_COLUMNS)
                     {
                         UIMethods.InvalidNumber();
-                        continue;
+                        return;
                     }
                    
 
@@ -118,6 +117,11 @@ namespace SoltMachine
                 if (matchFound)
                 {
                     availableBalance += playerBet + WINNINGS;
+                    UIMethods.Matchfound(Program.WINNINGS);
+                }
+                else
+                {
+                    UIMethods.NoMatchfound();
                 }
 
                 if (availableBalance == 0)

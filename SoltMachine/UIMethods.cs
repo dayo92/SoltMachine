@@ -69,14 +69,14 @@ namespace SoltMachine
             Console.WriteLine($"Please enter only characters available {row}, {column}, or {Diagonal}");        
         } 
         
-        public static void Matchfound(string position, int  winnings)
+        public static void Matchfound(int  winnings)
         {
-            Console.WriteLine($"{position} match found you won £{winnings}.");
+            Console.WriteLine($"Match found you won £{winnings}.");
         } 
         
-        public static void NoMatchfound(int selectedRow)
+        public static void NoMatchfound()
         {
-            Console.WriteLine($"No match found in row {selectedRow}.");
+            Console.WriteLine($"No match found");
             
         } 
         
