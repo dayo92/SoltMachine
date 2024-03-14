@@ -5,44 +5,44 @@ namespace SoltMachine
     public class Logic
     {
         
-       
-            public static int[,] GenerateRandomNumbers(int NUMBER_OF_ROWS, int NUMBER_OF_COLUMNS, int MIN_RANDOM_NUMBER, int MAX_RANDOM_NUMBER)
+            public static int[,] GenerateRandomNumbers()
             {
-                int[,] numbers = new int[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
+                int[,] numbers = new int[Program.NUMBER_OF_ROWS, Program.NUMBER_OF_COLUMNS];
                     
                 Random random = new Random();
-                for (int i = 0; i < NUMBER_OF_ROWS; i++)
+                for (int i = 0; i < Program.NUMBER_OF_ROWS; i++)
                 {
-                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
+                    for (int j = 0; j < Program.NUMBER_OF_COLUMNS; j++)
                     {
-                        numbers[i, j] = random.Next(MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
+                        numbers[i, j] = random.Next(Program.MIN_RANDOM_NUMBER, Program.MAX_RANDOM_NUMBER);
                     }
                 }
                 
                 return numbers;
             }
             
-            public static char GetPlayerChar(char ROW_CHAR, char COLUMN_CHAR, char Diagonal_CHAR)
+            public static char GetPlayerChar()
             {
-                UIMethods.text(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
+                UIMethods.text(Program.ROW_CHAR, Program.COLUMN_CHAR, Program.Diagonal_CHAR);
             
                 char gameChar = char.ToUpper(Console.ReadKey().KeyChar);
                 Console.WriteLine();
 
-                if (gameChar != ROW_CHAR && gameChar != COLUMN_CHAR && gameChar != Diagonal_CHAR)
+                if (gameChar != Program.ROW_CHAR && gameChar != Program.COLUMN_CHAR && gameChar != Program.Diagonal_CHAR)
                 {
-                    UIMethods.InvalidChar(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
+                    UIMethods.InvalidChar(Program.ROW_CHAR, Program.COLUMN_CHAR, Program.Diagonal_CHAR);
                 }
 
                 return gameChar;
             }
             
             
-            public static void DisplayGrid(int[,] numbers, int NUMBER_OF_ROWS, int NUMBER_OF_COLUMNS)
+            public static void DisplayGrid(int[,] numbers)
             {
-                for (int i = 0; i < NUMBER_OF_ROWS; i++)
+             
+                for (int i = 0; i < Program.NUMBER_OF_ROWS; i++)
                 {
-                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
+                    for (int j = 0; j < Program.NUMBER_OF_COLUMNS; j++)
                     {
                         UIMethods.Grid(numbers, i, j);
                     }
@@ -51,10 +51,10 @@ namespace SoltMachine
                 }
             }
             
-            public static bool CheckRowMatch(int[,] numbers, int selectedRow,int NUMBER_OF_COLUMNS, string ROW, int WINNINGS)
+            public static bool CheckRowMatch(int[,] numbers, int selectedRow)
             {
                 
-                for (int col = 1; col < NUMBER_OF_COLUMNS; col++)
+                for (int col = 1; col < Program.NUMBER_OF_COLUMNS; col++)
                 {
                     if (numbers[selectedRow - 1, col] != numbers[selectedRow - 1, 0])
                     {
@@ -63,15 +63,16 @@ namespace SoltMachine
                     }
                 }
                 
-                UIMethods.Matchfound(ROW,WINNINGS);
+                UIMethods.Matchfound(Program.ROW,Program.WINNINGS);
                 
                 return true;
                 
             }
             
-            public static bool CheckColumnMatch(int[,] numbers, int selectedCol, int NUMBER_OF_ROWS, string COLUMN, int WINNINGS)
+            public static bool CheckColumnMatch(int[,] numbers, int selectedCol)
             {
-                for (int row = 1; row < NUMBER_OF_ROWS; row++)
+                Console.WriteLine("CHECKING COLUMNS");
+                for (int row = 1; row < Program.NUMBER_OF_ROWS; row++)
                 {
                     if (numbers[row, selectedCol - 1] != numbers[0, selectedCol - 1])
                     {
@@ -82,14 +83,14 @@ namespace SoltMachine
                 }
 
 
-                UIMethods.Matchfound(COLUMN, WINNINGS);
+                UIMethods.Matchfound(Program.COLUMN, Program.WINNINGS);
 
                 return true;
             }
             
-            public static bool CheckDiagonalMatch1(int[,] numbers, int NUMBER_OF_ROWS, string DIAGONAL, int WINNINGS)
+            public static bool CheckDiagonalMatch1(int[,] numbers)
             {
-                for (int diagonal = 1; diagonal < NUMBER_OF_ROWS; diagonal++)
+                for (int diagonal = 1; diagonal < Program.NUMBER_OF_ROWS; diagonal++)
                 {
                     if (numbers[diagonal, diagonal] != numbers[0, 0])
                     {
@@ -97,23 +98,23 @@ namespace SoltMachine
                     }
                 }
 
-                UIMethods.Matchfound(DIAGONAL, WINNINGS);
+                UIMethods.Matchfound(Program.DIAGONAL, Program.WINNINGS);
 
 
                 return true;
             }
 
-            public static bool CheckDiagonalMatch2(int[,] numbers, int NUMBER_OF_ROWS, int NUMBER_OF_COLUMNS, string DIAGONAL2, int WINNINGS)
+            public static bool CheckDiagonalMatch2(int[,] numbers)
             {
-                for (int diagonal = 0; diagonal < NUMBER_OF_ROWS; diagonal++)
+                for (int diagonal = 0; diagonal < Program.NUMBER_OF_ROWS; diagonal++)
                 {
-                    if (numbers[diagonal, NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, NUMBER_OF_COLUMNS - 1])
+                    if (numbers[diagonal, Program.NUMBER_OF_COLUMNS - 1 - diagonal] != numbers[0, Program.NUMBER_OF_COLUMNS - 1])
                     {
                         return false;
                     }
                 }
 
-                UIMethods.Matchfound(DIAGONAL2, WINNINGS);
+                UIMethods.Matchfound(Program.DIAGONAL2, Program.WINNINGS);
 
                 return true;
             }

@@ -5,33 +5,34 @@ namespace SoltMachine
 {
     internal class Program
     {
+        public const int NUMBER_OF_ROWS = 3;
+        public const int NUMBER_OF_COLUMNS = 3;
+        public const int MIN_RANDOM_NUMBER = 1;
+        public const int MAX_RANDOM_NUMBER = 3;
+        
+        public const char ROW_CHAR = 'R';
+        public const char COLUMN_CHAR = 'C';
+        public const char Diagonal_CHAR = 'D';
+        
+        public const string ROW = "Row";
+        public const string COLUMN = "Column";
+        public const string DIAGONAL = "Diagonal";
+        public const string DIAGONAL2 = "Diagonal 2";
+        
+        public const int WINNINGS = 1;
+        public const int PLAYER_BALANCE = 100;
+        
         public static void Main(string[] args)
         {
             UIMethods.PrintGameTitle();
-
-            const int NUMBER_OF_ROWS = 3;
-            const int NUMBER_OF_COLUMNS = 3;
-            const int WINNINGS = 1;
-            const int PLAYER_BALANCE = 100;
-            const int MIN_RANDOM_NUMBER = 1;
-            const int MAX_RANDOM_NUMBER = 3;
-
-            const char ROW_CHAR = 'R';
-            const char COLUMN_CHAR = 'C';
-            const char Diagonal_CHAR = 'D';
-
-            const string ROW = "Row";
-            const string COLUMN = "Column";
-            const string DIAGONAL = "Diagonal";
-            const string DIAGONAL2 = "Diagonal 2";
-
+            
 
             int availableBalance = PLAYER_BALANCE;
 
 
             while (true)
             {
-                char gameChar = Logic.GetPlayerChar(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
+                char gameChar = Logic.GetPlayerChar();
 
                 UIMethods.AvailableBalance(availableBalance);
 
@@ -65,8 +66,7 @@ namespace SoltMachine
 
                 availableBalance -= playerBet;
 
-                int[,] numbers = Logic.GenerateRandomNumbers(NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, MIN_RANDOM_NUMBER,
-                    MAX_RANDOM_NUMBER);
+                int[,] numbers = Logic.GenerateRandomNumbers();
 
                 if (gameChar == ROW_CHAR)
                 {
@@ -79,7 +79,7 @@ namespace SoltMachine
 
                     //Row
 
-                    matchFound = Logic.CheckRowMatch(numbers, selectedRow, NUMBER_OF_COLUMNS, ROW, WINNINGS);
+                    matchFound = Logic.CheckRowMatch(numbers, selectedRow);
                 }
 
 
@@ -93,10 +93,11 @@ namespace SoltMachine
                         UIMethods.InvalidNumber();
                         continue;
                     }
+                   
 
                     //Column
 
-                    matchFound = Logic.CheckColumnMatch(numbers, selectedCol, NUMBER_OF_ROWS, COLUMN, WINNINGS);
+                    matchFound = Logic.CheckColumnMatch(numbers, selectedCol);
                 }
 
 
@@ -104,10 +105,10 @@ namespace SoltMachine
                 {
                     // Diagonal 1
 
-                    bool diagonalMatch1 = Logic.CheckDiagonalMatch1(numbers, NUMBER_OF_ROWS, DIAGONAL, WINNINGS);
+                    bool diagonalMatch1 = Logic.CheckDiagonalMatch1(numbers);
 
                     // Diagonal 2
-                    bool diagonalMatch2 = diagonalMatch1 ? false : Logic.CheckDiagonalMatch2(numbers, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, DIAGONAL2, WINNINGS);
+                    bool diagonalMatch2 = diagonalMatch1 ? false : Logic.CheckDiagonalMatch2(numbers);
 
 
                     matchFound = diagonalMatch1 || diagonalMatch2;
@@ -129,7 +130,7 @@ namespace SoltMachine
 
                 UIMethods.SlotNumberTitle();
 
-                Logic.DisplayGrid(numbers, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS);
+                Logic.DisplayGrid(numbers);
             }
             
             
