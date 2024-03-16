@@ -12,7 +12,7 @@ namespace SoltMachine
         
         public const char ROW_CHAR = 'R';
         public const char COLUMN_CHAR = 'C';
-        public const char Diagonal_CHAR = 'D';
+        public const char DIAGONAL_CHAR = 'D';
         
         public const string ROW = "Row";
         public const string COLUMN = "Column";
@@ -100,7 +100,7 @@ namespace SoltMachine
                 }
 
 
-                if (gameChar == Diagonal_CHAR)
+                if (gameChar == DIAGONAL_CHAR)
                 {
                     // Diagonal 1
 
@@ -139,16 +139,24 @@ namespace SoltMachine
             
             char GetPlayerChar()
             {
-                UIMethods.PlayerPositionChoice(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
-            
-                char gameChar = char.ToUpper(Console.ReadKey().KeyChar);
-                UIMethods.WriteLine();
+                char gameChar;
+                bool isValidChar = false;
 
-                if (!Logic.IsInputCharValid(gameChar, ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR))
+                do
                 {
-                    UIMethods.InvalidChar(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
-                    
-                }
+                    UIMethods.PlayerPositionChoice(ROW_CHAR, COLUMN_CHAR, DIAGONAL_CHAR);
+                    gameChar = char.ToUpper(Console.ReadKey(true).KeyChar);
+                    UIMethods.WriteLine();
+
+                    if (Logic.IsInputCharValid(gameChar, ROW_CHAR, COLUMN_CHAR, DIAGONAL_CHAR))
+                    {
+                        isValidChar = true;
+                    }
+                    else
+                    {
+                        UIMethods.InvalidChar(ROW_CHAR, COLUMN_CHAR, DIAGONAL_CHAR);
+                    }
+                } while (!isValidChar);
 
                 return gameChar;
             }

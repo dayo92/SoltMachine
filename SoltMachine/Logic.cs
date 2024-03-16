@@ -5,11 +5,13 @@ namespace SoltMachine
     public class Logic
     {
         
+            static readonly Random random = new Random();
+        
             public static int[,] GenerateRandomNumbers()
             {
                 int[,] numbers = new int[Program.NUMBER_OF_ROWS, Program.NUMBER_OF_COLUMNS];
                     
-                Random random = new Random();
+               
                 for (int i = 0; i < Program.NUMBER_OF_ROWS; i++)
                 {
                     for (int j = 0; j < Program.NUMBER_OF_COLUMNS; j++)
