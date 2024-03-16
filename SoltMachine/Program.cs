@@ -16,10 +16,8 @@ namespace SoltMachine
         
         public const string ROW = "Row";
         public const string COLUMN = "Column";
-        public const string DIAGONAL = "Diagonal";
-        public const string DIAGONAL2 = "Diagonal 2";
+      
         
-        public const int WINNINGS = 1;
         public const int PLAYER_BALANCE = 100;
         
         public static void Main(string[] args)
@@ -27,12 +25,14 @@ namespace SoltMachine
             UIMethods.PrintGameTitle();
             
 
+            const int WINNINGS = 1;
+        
             int availableBalance = PLAYER_BALANCE;
 
 
             while (true)
             {
-                char gameChar = Logic.GetPlayerChar();
+                char gameChar = GetPlayerChar();
 
                 UIMethods.AvailableBalance(availableBalance);
 
@@ -79,7 +79,7 @@ namespace SoltMachine
 
                     //Row
 
-                    matchFound = Logic.CheckRowMatch(numbers, selectedRow);
+                    matchFound = CheckRowMatch(numbers, selectedRow);
                 }
 
 
@@ -96,7 +96,7 @@ namespace SoltMachine
 
                     //Column
 
-                    matchFound = Logic.CheckColumnMatch(numbers, selectedCol);
+                    matchFound = CheckColumnMatch(numbers, selectedCol);
                 }
 
 
@@ -104,10 +104,10 @@ namespace SoltMachine
                 {
                     // Diagonal 1
 
-                    bool diagonalMatch1 = Logic.CheckDiagonalMatch1(numbers);
+                    bool diagonalMatch1 = CheckDiagonalMatch1(numbers);
 
                     // Diagonal 2
-                    bool diagonalMatch2 = diagonalMatch1 ? false : Logic.CheckDiagonalMatch2(numbers);
+                    bool diagonalMatch2 = diagonalMatch1 ? false : CheckDiagonalMatch2(numbers);
 
 
                     matchFound = diagonalMatch1 || diagonalMatch2;
@@ -117,7 +117,7 @@ namespace SoltMachine
                 if (matchFound)
                 {
                     availableBalance += playerBet + WINNINGS;
-                    UIMethods.Matchfound(Program.WINNINGS);
+                    UIMethods.Matchfound(WINNINGS);
                 }
                 else
                 {
@@ -134,9 +134,60 @@ namespace SoltMachine
 
                 UIMethods.SlotNumberTitle();
 
-                Logic.DisplayGrid(numbers);
+                DisplayGrid(numbers);
             }
             
+            char GetPlayerChar()
+            {
+                UIMethods.PlayerPositionChoice(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
+            
+                char gameChar = char.ToUpper(Console.ReadKey().KeyChar);
+                UIMethods.WriteLine();
+
+                if (!Logic.IsInputCharValid(gameChar, ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR))
+                {
+                    UIMethods.InvalidChar(ROW_CHAR, COLUMN_CHAR, Diagonal_CHAR);
+                    
+                }
+
+                return gameChar;
+            }
+            
+            void DisplayGrid(int[,] numbers)
+            {
+             
+                for (int i = 0; i < NUMBER_OF_ROWS; i++)
+                {
+                    for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
+                    {
+                        UIMethods.Grid(numbers, i, j);
+                    }
+
+                    UIMethods.WriteLine();
+                }
+            }
+            
+            bool CheckRowMatch(int[,] numbers, int selectedRow)
+            {
+                
+                return Logic.CheckMatchInRows(numbers, selectedRow);
+                
+            }
+            
+            bool CheckColumnMatch(int[,] numbers, int selectedCol)
+            {
+                return Logic.CheckMatchInColumn(numbers, selectedCol);
+            }
+            
+            bool CheckDiagonalMatch1(int[,] numbers)
+            {
+                return Logic.CheckMatchInDiagonal1(numbers);
+            }
+
+            bool CheckDiagonalMatch2(int[,] numbers)
+            {
+                return Logic.CheckMatchInDiagonal2(numbers);
+            }
             
         }
     }

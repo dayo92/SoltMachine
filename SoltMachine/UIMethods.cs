@@ -59,7 +59,7 @@ namespace SoltMachine
             Console.Write(numbers[i, j] + " ");
         } 
         
-        public static void text(char row, char column, char Diagonal)
+        public static void PlayerPositionChoice(char row, char column, char Diagonal)
         {
             Console.WriteLine($"Please type in what position you want to match. ({row}) for Row Match, ({column}) for Column Match, and ({Diagonal}) for Diagonal Match.");
         } 
@@ -90,6 +90,10 @@ namespace SoltMachine
 
         }
         
+        public static void WriteLine()
+        {
+            Console.WriteLine();
+        }
         
      
     }
