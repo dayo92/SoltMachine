@@ -8,7 +8,7 @@ namespace SoltMachine
         public const int NUMBER_OF_ROWS = 3;
         public const int NUMBER_OF_COLUMNS = 3;
         public const int MIN_RANDOM_NUMBER = 1;
-        public const int MAX_RANDOM_NUMBER = 3;
+        public const int MAX_RANDOM_NUMBER = 10;
         
         public const char ROW_CHAR = 'R';
         public const char COLUMN_CHAR = 'C';
@@ -34,7 +34,7 @@ namespace SoltMachine
             {
                 char gameChar = GetPlayerChar();
 
-                UIMethods.AvailableBalance(availableBalance);
+                UIMethods.PrintAvailableBalance(availableBalance);
 
 
                 int playerBet = 0;
@@ -44,25 +44,25 @@ namespace SoltMachine
 
                 while (!isValid)
                 {
-                    string bet = UIMethods.BettingQuestion();
+                    string bet = UIMethods.PrintBettingQuestion();
 
                     isValid = int.TryParse(bet, out playerBet);
 
                     if (!isValid)
                     {
-                        UIMethods.InvalidNumber();
+                        UIMethods.PrintInvalidNumber();
                     }
                 }
 
 
                 if (playerBet > availableBalance)
                 {
-                    UIMethods.LowBalance();
+                    UIMethods.PrintLowBalanceMessage();
                     continue;
                 }
 
 
-                UIMethods.LockedBet(playerBet);
+                UIMethods.PrintLockedBet(playerBet);
 
                 availableBalance -= playerBet;
 
@@ -70,10 +70,10 @@ namespace SoltMachine
 
                 if (gameChar == ROW_CHAR)
                 {
-                    if (!int.TryParse(UIMethods.EnterNumber(ROW), out int selectedRow) || selectedRow < 1 ||
+                    if (!int.TryParse(UIMethods.PrintEnterNumberOption(ROW), out int selectedRow) || selectedRow < 1 ||
                         selectedRow > NUMBER_OF_ROWS)
                     {
-                        UIMethods.InvalidNumber();
+                        UIMethods.PrintInvalidNumber();
                         return;
                     }
 
@@ -86,10 +86,10 @@ namespace SoltMachine
                 if (gameChar == COLUMN_CHAR)
                 {
 
-                    if (!int.TryParse(UIMethods.EnterNumber(COLUMN), out int selectedCol) || selectedCol < 1 ||
+                    if (!int.TryParse(UIMethods.PrintEnterNumberOption(COLUMN), out int selectedCol) || selectedCol < 1 ||
                         selectedCol > NUMBER_OF_COLUMNS)
                     {
-                        UIMethods.InvalidNumber();
+                        UIMethods.PrintInvalidNumber();
                         return;
                     }
                    
@@ -117,22 +117,22 @@ namespace SoltMachine
                 if (matchFound)
                 {
                     availableBalance += playerBet + WINNINGS;
-                    UIMethods.Matchfound(WINNINGS);
+                    UIMethods.PrintMatchfoundMessage(WINNINGS);
                 }
                 else
                 {
-                    UIMethods.NoMatchfound();
+                    UIMethods.PrintNoMatchfoundMessage();
                 }
 
                 if (availableBalance == 0)
                 {
-                    UIMethods.NoFunds();
+                    UIMethods.PrintNoFundsMessage();
                     break;
                 }
 
-                UIMethods.RemainingBalance(availableBalance);
+                UIMethods.PrintRemainingBalance(availableBalance);
 
-                UIMethods.SlotNumberTitle();
+                UIMethods.PrintSlotNumberTitle();
 
                 DisplayGrid(numbers);
             }
@@ -144,7 +144,7 @@ namespace SoltMachine
 
                 do
                 {
-                    UIMethods.PlayerPositionChoice(ROW_CHAR, COLUMN_CHAR, DIAGONAL_CHAR);
+                    UIMethods.PrintPlayerPositionChoice(ROW_CHAR, COLUMN_CHAR, DIAGONAL_CHAR);
                     gameChar = char.ToUpper(Console.ReadKey(true).KeyChar);
                     UIMethods.WriteLine();
 
@@ -154,7 +154,7 @@ namespace SoltMachine
                     }
                     else
                     {
-                        UIMethods.InvalidChar(ROW_CHAR, COLUMN_CHAR, DIAGONAL_CHAR);
+                        UIMethods.PrintInvalidCharMessage(ROW_CHAR, COLUMN_CHAR, DIAGONAL_CHAR);
                     }
                 } while (!isValidChar);
 
@@ -168,7 +168,7 @@ namespace SoltMachine
                 {
                     for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
                     {
-                        UIMethods.Grid(numbers, i, j);
+                        UIMethods.PrintMachnieGrid(numbers, i, j);
                     }
 
                     UIMethods.WriteLine();

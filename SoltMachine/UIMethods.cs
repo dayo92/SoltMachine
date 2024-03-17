@@ -9,78 +9,78 @@ namespace SoltMachine
             Console.WriteLine("Slot Machine Game");
         } 
         
-        public static void AvailableBalance(int availableBalance)
+        public static void PrintAvailableBalance(int availableBalance)
          {
              Console.WriteLine($"Your available balance is £{availableBalance}.");
          }
         
-        public static string BettingQuestion()
+        public static string PrintBettingQuestion()
         {
-            return GetAnswer("How much would you like to bet? ");
+            return GetPlayerAnswer("How much would you like to bet? ");
         } 
         
-        public static void InvalidNumber()
+        public static void PrintInvalidNumber()
         {
             Console.WriteLine("Invalid number. Please try again.");
         } 
         
-        public static void LowBalance()
+        public static void PrintLowBalanceMessage()
         {
             Console.WriteLine("Not enough cash. Please try again,");
         } 
         
-        public static void LockedBet( int playerBet)
+        public static void PrintLockedBet( int playerBet)
         {
             Console.WriteLine($"£{playerBet} bet locked in.");
         } 
         
-        public static string EnterNumber( string position)
+        public static string PrintEnterNumberOption( string position)
         {
-           return GetAnswer($"Enter the {position} number (1, 2, or 3) you want to check:");
+           return GetPlayerAnswer($"Enter the {position} number (1, 2, or 3) you want to check:");
         } 
         
-        public static void NoFunds()
+        public static void PrintNoFundsMessage()
         {
             Console.WriteLine("No funds left you lose.");
         } 
         
-        public static void RemainingBalance(int availableBalance)
+        public static void PrintRemainingBalance(int availableBalance)
         {
             Console.WriteLine($"Your remaining balance is £{availableBalance}");
         } 
         
-        public static void SlotNumberTitle()
+        public static void PrintSlotNumberTitle()
         {
             Console.WriteLine("Slot Numbers:");
         } 
         
-        public static void Grid(int[,] numbers, int i, int j)
+        public static void PrintMachnieGrid(int[,] numbers, int i, int j)
         {
             Console.Write(numbers[i, j] + " ");
         } 
         
-        public static void PlayerPositionChoice(char row, char column, char Diagonal)
+        public static void PrintPlayerPositionChoice(char row, char column, char Diagonal)
         {
             Console.WriteLine($"Please type in what position you want to match. ({row}) for Row Match, ({column}) for Column Match, and ({Diagonal}) for Diagonal Match.");
         } 
         
-        public static void InvalidChar(char row, char column, char Diagonal)
+        public static void PrintInvalidCharMessage(char row, char column, char Diagonal)
         {
             Console.WriteLine($"Please enter only characters available {row}, {column}, or {Diagonal}");        
         } 
         
-        public static void Matchfound(int  winnings)
+        public static void PrintMatchfoundMessage(int  winnings)
         {
             Console.WriteLine($"Match found you won £{winnings}.");
         } 
         
-        public static void NoMatchfound()
+        public static void PrintNoMatchfoundMessage()
         {
             Console.WriteLine($"No match found");
             
         } 
         
-        public static string GetAnswer(string question)
+        public static string GetPlayerAnswer(string question)
         {
             Console.WriteLine($"{question}");
 
